@@ -13,7 +13,11 @@ app.get('/', function (req, res) {
   res.send('Hello world -- My server is working!!!');
   // Log a message to the terminal window
   console.log((new Date()).toString()+' Message served to the client');
-})
+});
+app.get('/dog', function (req, res) {
+  res.send('This is the dog route');
+});
+
 
 // Set up the server to 'listen' to requests on port 8080
 // Requests to virtual machines running on Cloud 9 will use
@@ -21,5 +25,5 @@ app.get('/', function (req, res) {
 // specific port by adding :nnnn to the end of the URL
 app.listen(PORT, function () {
   // This function executes when a request is heard from the client
-  console.log('Example app listening on port ' + PORT + '!');;
+  console.log('Example app listening on port ' + PORT + '!');
 });
