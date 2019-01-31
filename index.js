@@ -14,6 +14,10 @@ app.get('/', function (req, res) {
   // Log a message to the terminal window
   console.log((new Date()).toString()+' Message served to the client');
 });
+app.get('*', function (req, res) {
+  res.send('This part runs if no other paths catch it');
+})
+
 app.get('/dog', function (req, res) {
   res.send('This is the dog route');
 });
