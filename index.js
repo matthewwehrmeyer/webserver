@@ -14,8 +14,8 @@ app.get('/', function (req, res) {
   // Log a message to the terminal window
   console.log((new Date()).toString()+' Message served to the client');
 });
-app.get('/dog', function (req, res) {
-  res.send('This is the dog route');
+app.get('/dog/:breed', function (req, res) {
+  res.send('This is the dog route and the breed was: '+req.params.breed);
 });
 app.get('*', function (req, res) {
   res.send('This part runs if no other paths catch it');
