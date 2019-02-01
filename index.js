@@ -15,9 +15,12 @@ app.use(function (req, res, next) {
 // Respond with "hello world" when a GET request is made
 app.get('/', function (req, res) {
   // Send the text back to the client in response to the request
-  res.send('Hello world -- My server is working!!!');
-  // Log a message to the terminal window
-  console.log((new Date()).toString()+' Message served to the client');
+  res.append('Content-Type', 'text/html');
+  res.send('<html><head></head><body>'+
+    '<h1>Hello World!</h1>'+
+    '<h3>My server is working!!!</h3>'+
+    '<h5>'+req.timestamp+'</h5></body></html>');
+
 });
 app.get('/dog/:breed', function (req, res) {
   res.send('This is the dog route and the breed was: '+req.params.breed);
