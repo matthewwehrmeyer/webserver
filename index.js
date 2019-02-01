@@ -6,6 +6,11 @@ var app = express();
 
 // Set the port number to be compatible with Cloud 9
 const PORT = 8080;
+app.use(function (req, res, next) {
+  console.log('Additional processing is done here');
+  req.timestamp = new Date().toString();
+  next();
+});
 
 // Respond with "hello world" when a GET request is made
 app.get('/', function (req, res) {
