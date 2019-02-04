@@ -12,3 +12,8 @@ console.log(array2);
 console.log('New array');
 console.log(newArray);
 console.log(newArray2);
+
+// Go Patrick Henry?
+let array3 = ['P','a','t','r','i','c','k',' ','H','e','n','r','y'];
+let newArray3 = array3.reduce((accumulator, item) => accumulator + item, 'Go ');
+console.log(newArray3);
