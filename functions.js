@@ -1,4 +1,4 @@
-let x = 1;
+var x = 1;
 
 if ( x == 0){
 let array1 = [3,6,4,2,7,8,6,10,2,5,4,1];
@@ -22,7 +22,8 @@ let newArray3 = array3.reduce((accumulator, item) => accumulator + item, 'Go ');
 console.log(newArray3);
 }
 
-let array4_ = [
+
+let array2 = [
   {name: 'George', rank: 1},
   {name: 'Thomas', rank: 2},
   {name: 'Abraham', rank: 5},
@@ -36,5 +37,5 @@ let array4_ = [
   {name: 'Salmon', rank: 10000},
   {name: 'Woodrow', rank: 100000}
 ];
-let newArray = array4_.filter(item => item.rank < 50);
-console.log(newArray)
+let newArray = array2.filter(item => item.name > "F");
+console.log(newArray);
