@@ -22,7 +22,7 @@ let newArray3 = array3.reduce((accumulator, item) => accumulator + item, 'Go ');
 console.log(newArray3);
 }
 
-let array4 = [
+let array4_ = [
   {name: 'George', rank: 1},
   {name: 'Thomas', rank: 2},
   {name: 'Abraham', rank: 5},
@@ -36,5 +36,5 @@ let array4 = [
   {name: 'Salmon', rank: 10000},
   {name: 'Woodrow', rank: 100000}
 ];
-let newArray = array4.filter(item => item.rank < 50);
+let newArray = array4_.filter(item => item.rank < 50);
 console.log(newArray)
