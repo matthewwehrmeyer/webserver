@@ -50,6 +50,85 @@ app.get('/', function (req, res) {
   console.log((new Date()).toString()+' Message served to the client');
 });
 
+// Path 1: /baby-name/<name>
+app.get('/baby-name/:name', function(req, res) {
+  let data = byName[fixName(req.params.name)];
+  res.send(formatToHTML(data));
+});
+
+// Path 2: /baby-name/<name>/<year>
+app.get('/baby-name/:name/:year', function(req, res) {
+  let data = byName[fixName(req.params.name)];
+  if (!data) data = [];
+  // Check to see if the year matches what's requested.
+  // item.year is a number but req.params.year is a string
+  // so we need to add '' to the number to convert it to 
+  // a string so that the types match when they're compared
+  data = data.filter(item => item.year+'' === req.params.year);
+  res.send(formatToHTML(data));
+});
+
+// Path 3: /baby-name/<name>/after/<afterYear>
+  app.get('/baby-name/:name/after/:year', function(req, res) {
+    let data = byName[fixName(req.params.name)];
+    if (!data) data = [];
+    
+    data = data.filter(item => item.year-1+'' === req.params.year);
+    res.send(formatToHTML(data));
+  });
+
+// Path 4: /baby-name/<name>/before/<beforeYear>
+  app.get('/baby-name/:name/before/:year', function(req, res) {
+    let data = byName[fixName(req.params.name)];
+    if (!data) data = [];
+    
+    data = data.filter(item => item.year+1+'' === req.params.year);
+    res.send(formatToHTML(data));
+  });
+// Path 5: /baby-year/<year>
+  app.get('/baby-year/:year', function(req, res) {
+    let data = byYear[req.params.year];
+    if (!data) data = [];
+ 
+    data = data.sort((a,b) => {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    });
+    res.send(formatToHTML(data));
+  });
+// Path 6: /baby-year/<year>/<name>
+  app.get('/baby-year/:year/:name', function(req,res) {
+    let data = byYear[req.params.year];
+    data = data.filter(item => item.name.toLowerCase() === req.params.name.toLowerCase());
+    res.send(formatToHTML(data));
+  });
+// Path 7: /baby-year/<year>/<letter>
+// Babies born in <year> and names starting with <letter>
+app.get('/baby-year/:year/first/:letter', function(req, res) {
+  let data = byYear[req.params.year];
+  if (!data) data = [];
+  data = data.filter(item => item.name.charAt(0).toLowerCase() === req.params.letter.toLowerCase());
+  data = data.sort((a,b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
+  res.send(formatToHTML(data));
+});
+
+// Path 8: /baby-year/<year>/last/<letter>
+  app.get('/baby-year/:year/last/:letter', function(req, res) {
+  let data = byYear[req.params.year];
+  if (!data) data = [];
+  data = data.filter(item => item.name.charAt(item.name.length -1).toLowerCase() === req.params.letter.toLowerCase());
+  data = data.sort((a,b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
+  res.send(formatToHTML(data));
+});
 // Set up the server to 'listen' to requests on port 8080
 // Requests to virtual machines running on Cloud 9 will use
 // port 8080 by default.  You can force a URL request to a
