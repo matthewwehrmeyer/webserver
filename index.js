@@ -3,28 +3,7 @@ var express = require('express');
 
 const { byName, byYear } = require('us-baby-names');
 
-const formatToHTML = function(dataArr) {
-  // If dataArr is undefined or null, make an empty array
-  if (!dataArr) {
-    dataArr = [];
-  }
-  // Use the Array.map function to convert each record 
-  // into an HTML table element.
-  dataArr = dataArr.map(item => {
-    // Create the HTML here
-    let html = '<tr>';
-    html += (item.year) ? '<td>'+item.year+'</td>' : '';
-    html += (item.name) ? '<td>'+item.name+'</td>' : '';
-    html += (item.sex) ? '<td>'+item.sex+'</td>' : '';
-    html += (item.count) ? '<td>'+item.count+'</td>' : '';
-    html += '</tr>';
-    return html;
-  });
-  // Now join all the elements together inside the 
-  // <table><tbody> elements.
-  return '<table><tbody>'+
-    dataArr.join('')+'</tbody></table>';
-};
+
 // Transform name with first character capitalized and the 
 // rest lower case
 const fixName = function(name) {
@@ -45,7 +24,7 @@ const PORT = 8080;
 // Respond with "hello world" when a GET request is made
 app.get('/', function (req, res) {
   // Send the text back to the client in response to the request
-  res.send('Hello world -- My server is working!!!');
+  res.json('Hello world -- My server is working!!!');
   // Log a message to the terminal window
   console.log((new Date()).toString()+' Message served to the client');
 });
@@ -53,7 +32,7 @@ app.get('/', function (req, res) {
 // Path 1: /baby-name/<name>
 app.get('/baby-name/:name', function(req, res) {
   let data = byName[fixName(req.params.name)];
-  res.send(formatToHTML(data));
+  res.json(data);
 });
 
 // Path 2: /baby-name/<name>/<year>
@@ -65,7 +44,7 @@ app.get('/baby-name/:name/:year', function(req, res) {
   // so we need to add '' to the number to convert it to 
   // a string so that the types match when they're compared
   data = data.filter(item => item.year+'' === req.params.year);
-  res.send(formatToHTML(data));
+  res.json(data);
 });
 
 // Path 3: /baby-name/<name>/after/<afterYear>
@@ -74,7 +53,7 @@ app.get('/baby-name/:name/:year', function(req, res) {
     if (!data) data = [];
     
     data = data.filter(item => item.year-1+'' === req.params.year);
-    res.send(formatToHTML(data));
+    res.json(data);
   });
 
 // Path 4: /baby-name/<name>/before/<beforeYear>
@@ -83,7 +62,7 @@ app.get('/baby-name/:name/:year', function(req, res) {
     if (!data) data = [];
     
     data = data.filter(item => item.year+1+'' === req.params.year);
-    res.send(formatToHTML(data));
+    res.json(data);
   });
 // Path 5: /baby-year/<year>
   app.get('/baby-year/:year', function(req, res) {
@@ -95,13 +74,13 @@ app.get('/baby-name/:name/:year', function(req, res) {
       if (a.name > b.name) return 1;
       return 0;
     });
-    res.send(formatToHTML(data));
+    res.json(data);
   });
 // Path 6: /baby-year/<year>/<name>
   app.get('/baby-year/:year/:name', function(req,res) {
     let data = byYear[req.params.year];
     data = data.filter(item => item.name.toLowerCase() === req.params.name.toLowerCase());
-    res.send(formatToHTML(data));
+    res.json(data);
   });
 // Path 7: /baby-year/<year>/<letter>
 // Babies born in <year> and names starting with <letter>
@@ -114,7 +93,7 @@ app.get('/baby-year/:year/first/:letter', function(req, res) {
     if (a.name > b.name) return 1;
     return 0;
   });
-  res.send(formatToHTML(data));
+  res.jsond(data);
 });
 
 // Path 8: /baby-year/<year>/last/<letter>
@@ -127,7 +106,7 @@ app.get('/baby-year/:year/first/:letter', function(req, res) {
     if (a.name > b.name) return 1;
     return 0;
   });
-  res.send(formatToHTML(data));
+  res.json(data);
 });
 // Set up the server to 'listen' to requests on port 8080
 // Requests to virtual machines running on Cloud 9 will use
