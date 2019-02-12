@@ -73,7 +73,7 @@ app.get('/baby-name/:name/:year', function(req, res) {
     let data = byName[fixName(req.params.name)];
     if (!data) data = [];
     
-    data = data.filter(item => item.year-1+'' === req.params.year);
+    data = data.filter(item => item.year > req.params.year);
     res.send(formatToHTML(data));
   });
 
@@ -82,7 +82,7 @@ app.get('/baby-name/:name/:year', function(req, res) {
     let data = byName[fixName(req.params.name)];
     if (!data) data = [];
     
-    data = data.filter(item => item.year+1+'' === req.params.year);
+    data = data.filter(item => item.year < req.params.year);
     res.send(formatToHTML(data));
   });
 // Path 5: /baby-year/<year>
